@@ -302,7 +302,7 @@ body.packed #gearGate,body.packed #btnGear,body.packed label[for=fileImg],body.p
   <div id="gateQ" class="script"></div>
   <form id="gateForm" autocomplete="off"><input type="text" id="gateIn" inputmode="numeric" placeholder="dd/mm/yyyy" aria-label="Ngày đầu tiên mình gặp nhau"><button class="btn pri" type="submit" style="min-height:46px;padding:0 24px">Mở cổng</button></form>
   <div id="gateHint"></div>
-  <div id="gateNote">Bạn gõ liền các số cũng được, ví dụ 14022023</div>
+  <div id="gateNote">Bạn gõ liền các số cũng được, ví dụ 12092025</div>
 </div>
 <!-- Màn mở đầu: một vì sao -->
 <div id="opening" class="hide"><div id="oStar"></div><div id="oText" class="script"></div><div id="oHint">Chạm vào vì sao</div></div>
@@ -378,9 +378,9 @@ document.body.classList.toggle('packed', PACKED);
 const CONFIG = {
   herName: 'Em',                       // tên người yêu
   myName: 'Anh',                       // tên bạn
-  startDate: '2023-02-14',             // ngày bắt đầu yêu nhau (yyyy-mm-dd)
+  startDate: '2025-09-12',             // ngày bắt đầu yêu nhau (yyyy-mm-dd)
   gateQuestion: 'Chỉ có em mới mở được cánh cổng này. Ngày đầu tiên mình gặp nhau là ngày nào?',
-  gateAnswer: '',                      // ví dụ '14/02/2023'. Để trống = ai cũng mở được
+  gateAnswer: '',                      // ví dụ '12/09/2025'. Để trống = ai cũng mở được
   gateHint: 'Gợi ý: hôm đó trời hơi se lạnh, và em đến muộn năm phút.',
   openingLine: 'Giữa hàng tỷ vì sao, anh đã tìm thấy em…',
   nightSkyText: 'Đây là bầu trời đêm {date}. Hôm đó, vũ trụ đã lặng lẽ sắp đặt cho hai chúng ta gặp nhau.',
@@ -446,7 +446,7 @@ const CONFIG = {
     { title: 'Một bữa tối', text: '1 bữa tối em chọn quán, anh chỉ phụ trách trả tiền và khen món ngon.' },
     { title: 'Một buổi lắng nghe', text: '1 lần anh nghe em kể chuyện mà không ngắt lời, kể cả khi chuyện dài.' }
   ],
-  captions: [],                        // [{date:'14/02/2023', text:'Lần đầu mình đi chơi'}, ...] theo thứ tự ảnh
+  captions: [],                        // [{date:'12/09/2025', text:'Lần đầu mình đi chơi'}, ...] theo thứ tự ảnh
   speed: 1                             // tốc độ hiệu ứng (0.5 chậm … 2 nhanh)
 };
 if (PACK && PACK.config) Object.assign(CONFIG, PACK.config);
@@ -2150,9 +2150,9 @@ $('#btnNext').onclick = () => { if (ST.mode !== 'film') return; ST.skipTo = Math
    ===================================================================== */
 function normDate(s) {
   s = String(s || '').trim(); let d, mo, y, m;
-  if ((m = /^(\d{4})\D+(\d{1,2})\D+(\d{1,2})$/.exec(s))) { y = +m[1]; mo = +m[2]; d = +m[3]; }            /* 2023-02-14 */
-  else if ((m = /^(\d{1,2})\D+(\d{1,2})\D+(\d{2,4})$/.exec(s))) { d = +m[1]; mo = +m[2]; y = +m[3]; }       /* 14/02/2023 */
-  else { const g = s.replace(/\D/g, ''); if (g.length === 8) { d = +g.slice(0, 2); mo = +g.slice(2, 4); y = +g.slice(4); } else if (g.length === 6) { d = +g.slice(0, 2); mo = +g.slice(2, 4); y = +g.slice(4); } else return g; }   /* 14022023 */
+  if ((m = /^(\d{4})\D+(\d{1,2})\D+(\d{1,2})$/.exec(s))) { y = +m[1]; mo = +m[2]; d = +m[3]; }            /* 2025-09-12 */
+  else if ((m = /^(\d{1,2})\D+(\d{1,2})\D+(\d{2,4})$/.exec(s))) { d = +m[1]; mo = +m[2]; y = +m[3]; }       /* 12/09/2025 */
+  else { const g = s.replace(/\D/g, ''); if (g.length === 8) { d = +g.slice(0, 2); mo = +g.slice(2, 4); y = +g.slice(4); } else if (g.length === 6) { d = +g.slice(0, 2); mo = +g.slice(2, 4); y = +g.slice(4); } else return g; }   /* 12092025 */
   if (y < 100) y += 2000; return d + '/' + mo + '/' + y;
 }
 function gateOk(v) { if (!CONFIG.gateAnswer.trim()) return true; return normDate(v) === normDate(CONFIG.gateAnswer); }
@@ -2198,7 +2198,7 @@ function buildPanel() {
   field(d, 'Ngày bắt đầu yêu nhau', () => CONFIG.startDate, v => CONFIG.startDate = v, 'date');
   const sp = field(d, 'Tốc độ hiệu ứng (chậm ← → nhanh)', () => CONFIG.speed, v => CONFIG.speed = clamp(+v || 1, 0.4, 2.2), 'range'); sp.min = 0.5; sp.max = 2; sp.step = 0.05;
   d = section('Cổng mật mã và mở đầu');
-  field(d, 'Câu hỏi ở cổng', () => CONFIG.gateQuestion, v => CONFIG.gateQuestion = v, 'area'); field(d, 'Đáp án (ví dụ 14/02/2023, để trống = ai cũng vào được)', () => CONFIG.gateAnswer, v => CONFIG.gateAnswer = v);
+  field(d, 'Câu hỏi ở cổng', () => CONFIG.gateQuestion, v => CONFIG.gateQuestion = v, 'area'); field(d, 'Đáp án (ví dụ 12/09/2025, để trống = ai cũng vào được)', () => CONFIG.gateAnswer, v => CONFIG.gateAnswer = v);
   field(d, 'Gợi ý khi nhập sai', () => CONFIG.gateHint, v => CONFIG.gateHint = v, 'area'); field(d, 'Câu mở đầu', () => CONFIG.openingLine, v => CONFIG.openingLine = v, 'area'); field(d, 'Lời ở bầu trời đêm hôm ấy', () => CONFIG.nightSkyText, v => CONFIG.nightSkyText = v, 'area');
   d = section('Chữ hiển thị và lời nhắn cuối');
   field(d, 'Chữ xếp bằng ảnh (mỗi dòng một lần biến hình)', () => CONFIG.textWords, v => { CONFIG.textWords = v; textPts = {}; }, 'area'); field(d, 'Dòng tiêu đề lớn', () => CONFIG.finalTitle, v => CONFIG.finalTitle = v, 'area');
@@ -2229,7 +2229,7 @@ function buildCapUI() {
   photoList.forEach((p, i) => {
     const row = document.createElement('div'); row.className = 'capRow'; const cv = document.createElement('canvas'); cv.width = 44; cv.height = 56; cv.getContext('2d').drawImage(p.thumb, 0, 0); row.appendChild(cv);
     const col = document.createElement('div'); const c = CONFIG.captions[i] = CONFIG.captions[i] || { date: '', text: '' };
-    const di = document.createElement('input'); di.type = 'text'; di.placeholder = 'Ngày (vd 14/02/2023)'; di.value = c.date; di.oninput = () => c.date = di.value;
+    const di = document.createElement('input'); di.type = 'text'; di.placeholder = 'Ngày (vd 12/09/2025)'; di.value = c.date; di.oninput = () => c.date = di.value;
     const ti = document.createElement('input'); ti.type = 'text'; ti.placeholder = 'Dòng kỷ niệm của ảnh này'; ti.value = c.text; ti.oninput = () => c.text = ti.value; col.appendChild(di); col.appendChild(ti); row.appendChild(col); box.appendChild(row);
   });
 }
